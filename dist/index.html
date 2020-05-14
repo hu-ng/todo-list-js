@@ -3,9 +3,108 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>To-do Application</title>
+  <link rel="stylesheet" href="./styles/main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <title>Essential To-dos</title>
 </head>
 <body>
+  <div class="todo-container">
+    <div class="sidebar">
+
+      <!-- App name -->
+      <div class="sidebar__app-name">
+        <p>Essential</p>
+        <p>To-dos</p>
+      </div>
+      
+      <!-- Projects -->
+      <div class="sidebar__projects">
+        <div class="card">
+          <div class="card-content">
+              <img class="card-content--icon" src="./img/home.svg" alt="home">
+              <span class="card-content--description">Home</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+              <img class="card-content--icon" src="./img/note.svg" alt="home">
+              <span class="card-content--description">School Work</span>
+              <img class="card-content--delete" src="./img/trash.png" alt="delete project">
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+              <img class="card-content--icon" src="./img/note.svg" alt="home">
+              <span class="card-content--description">Daily</span>
+              <img class="card-content--delete" src="./img/trash.png" alt="delete project">
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+              <img class="card-content--icon" src="./img/note.svg" alt="home">
+              <span class="card-content--description">Daily</span>
+              <img class="card-content--delete" src="./img/trash.png" alt="delete project">
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar__add-project">
+        <form class="form-inline" style="flex-flow: nowrap;">
+          <input type="text" class="form-control mr-sm-3" id="newProjectName" name="newProjectName" placeholder="Add a new project">
+          <button type="submit" class="sidebar__add-project--button">
+            <img class="sidebar__add-project--icon" src="./img/plus.png" alt="">
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Work on adding search bar later -->
+    <div class="search-bar">
+      <div class="search-bar__text">
+        Search...
+      </div>
+    </div>
+
+    <!-- Todos section -->
+    <div class="todos">
+
+      <!-- Todo Header -->
+      <div class="todos__header">
+        <span class="todos__project-name">Home</span>
+        <button class="todos__header--add-todo">
+          New To-do
+        </button>
+      </div>
+
+      <!-- Todo list -->
+      <div class="todos__list">
+
+        <div class="card bordered">
+          <div class="card-content">
+              <input class="todo__toggle" type="checkbox" name="todo-toggle">
+              <span class="card-content--description">Take out the trash</span>
+              <span class="card-content--delete">
+                <img class="todo__icon" src="./img/pen.svg" alt="edit todo">
+                <img class="todo__icon" src="./img/trash.png" alt="delete todo">
+              </span>
+          </div>
+        </div>
+
+        <div class="card bordered">
+          <div class="card-content">
+              <input class="todo__toggle" type="checkbox" name="todo-toggle">
+              <span class="card-content--description">Do my homework</span>
+              <span class="card-content--delete">
+                <img class="todo__icon" src="./img/pen.svg" alt="edit todo">
+                <img class="todo__icon" src="./img/trash.png" alt="delete todo">
+              </span>
+          </div>
+        </div>
+    </div>
+
+    <!-- Form section starts here -->
+  </div>
   
   <script src="./main.js"></script>
 </body>
