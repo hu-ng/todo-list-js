@@ -77,7 +77,7 @@ button {
     height: 50%;
 }
 
-.card-content--delete {
+.card-content--action-icons {
     height: 50%;
     padding-right: 1em;
     margin-left: auto;
@@ -100,7 +100,7 @@ button {
 }
 
 .sidebar__add-project--button {
-    border: white;
+    border: 1.5px solid black;
     border-radius: 50%;
     height: 100%;
     background-color: var(--color-action);
@@ -148,10 +148,11 @@ button {
     color: white;
     font-weight: var(--fw-bold);
     font-size: var(--fs-body);
+    border: 1.5px solid black;
 }
 
-.bordered {
-    border: 1px solid black;
+.todo-bordered {
+    border: 1.5px solid black !important;
 }
 
 .todos__list {
