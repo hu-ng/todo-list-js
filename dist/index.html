@@ -19,40 +19,13 @@
       </div>
       
       <!-- Projects -->
-      <div class="sidebar__projects">
-        <div class="card">
-          <div class="card-content">
-              <img class="card-content--icon" src="./img/home.svg" alt="home">
-              <span class="card-content--description">Home</span>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-content">
-              <img class="card-content--icon" src="./img/note.svg" alt="home">
-              <span class="card-content--description">School Work</span>
-              <img class="card-content--delete" src="./img/trash.png" alt="delete project">
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-content">
-              <img class="card-content--icon" src="./img/note.svg" alt="home">
-              <span class="card-content--description">Daily</span>
-              <img class="card-content--delete" src="./img/trash.png" alt="delete project">
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-content">
-              <img class="card-content--icon" src="./img/note.svg" alt="home">
-              <span class="card-content--description">Daily</span>
-              <img class="card-content--delete" src="./img/trash.png" alt="delete project">
-          </div>
-        </div>
+      <div class="sidebar__projects" id="sidebar-projects">
       </div>
 
       <div class="sidebar__add-project">
-        <form class="form-inline" style="flex-flow: nowrap;">
+        <form class="form-inline" style="flex-flow: nowrap;" id="project-form">
           <input type="text" class="form-control mr-sm-3" id="newProjectName" name="newProjectName" placeholder="Add a new project">
-          <button type="submit" class="sidebar__add-project--button">
+          <button type="submit" class="sidebar__add-project--button" id="project-submit">
             <img class="sidebar__add-project--icon" src="./img/plus.png" alt="">
           </button>
         </form>
@@ -70,7 +43,7 @@
     <div class="todos">
 
       <!-- Todo Header -->
-      <div class="todos__header">
+      <div class="todos__header" id="todos-header">
         <span class="todos__project-name">Home</span>
         <button class="todos__header--add-todo">
           New To-do
@@ -78,32 +51,64 @@
       </div>
 
       <!-- Todo list -->
-      <div class="todos__list">
-
-        <div class="card bordered">
-          <div class="card-content">
-              <input class="todo__toggle" type="checkbox" name="todo-toggle">
-              <span class="card-content--description">Take out the trash</span>
-              <span class="card-content--delete">
-                <img class="todo__icon" src="./img/pen.svg" alt="edit todo">
-                <img class="todo__icon" src="./img/trash.png" alt="delete todo">
-              </span>
-          </div>
-        </div>
-
-        <div class="card bordered">
-          <div class="card-content">
-              <input class="todo__toggle" type="checkbox" name="todo-toggle">
-              <span class="card-content--description">Do my homework</span>
-              <span class="card-content--delete">
-                <img class="todo__icon" src="./img/pen.svg" alt="edit todo">
-                <img class="todo__icon" src="./img/trash.png" alt="delete todo">
-              </span>
-          </div>
-        </div>
+      <div class="todos__list" id="todos-list">
+      </div>
+      <div class="todo-form" id="todo-form">
+        <form>
+          <fieldset>
+            <!-- This will change dynamically -->
+            <legend class="todo-form__legend">
+              <span>Create a new to-do</span>
+              <img class="todo-form__icon" src="./img/x-sign.png" alt="close form">
+            </legend>
+            <div class="form-row">
+      
+              <!-- Title -->
+              <div class="form-group col-md-7">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" name="title" id="title" placeholder="Do my homework">
+              </div>
+      
+              <!-- Project -->
+              <div class="form-group col-md-4">
+                <label for="project">Project</label>
+                <select name="project" id="project" class="custom-select">
+                  <option selected value="0">None</option>
+                  <option value="1">School Work</option>
+                  <option value="2">Daily</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <!-- Due Date -->
+              <div class="form-group col-md-7">
+                <label for="dueDate">Due Date</label>
+                <input type="date" class="form-control" name="dueDate" id="dueDate">
+              </div>
+      
+              <!-- Priority -->
+              <div class="form-group col-md-4">
+                <label for="priority">Priority</label>
+                <select name="priority" id="priority" class="custom-select">
+                  <option class="text-danger" selected value="3">High</option>
+                  <option class="text-warning" value="2">Medium</option>
+                  <option class="text-success" value="1">Low</option>
+                </select>
+              </div>
+            </div>
+      
+            <!-- Description -->
+            <div class="form-row">
+              <div class="form-group col-md-11">
+                <label for="description">Description</label>
+                <textarea class="form-control" name="description" id="description" rows="3"></textarea>
+              </div>
+            </div>
+            <button type="submit" class=" todo__submit--btn">Save</button>
+          </fieldset>
+        </form>
+      </div>
     </div>
-
-    <!-- Form section starts here -->
   </div>
   
   <script src="./main.js"></script>

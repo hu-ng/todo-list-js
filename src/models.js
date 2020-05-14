@@ -10,7 +10,7 @@ class TodoModel {
     this._todos = [
       {
         id: 1,
-        title: "First Todo",
+        title: "First To-do",
         description: "This is my first todo",
         dueDate: new Date(2020, 10, 1),
         complete: false,
@@ -18,13 +18,16 @@ class TodoModel {
         priority: priorityConst.medium
       },
     ];
+
+    this.lifeTimeTodosCount = 1;
   };
 
   // Add Delete Toggle Edit
   // Add a new todo with unique id
   addTodo(title, description, dueDate, projectId, priority) {
+    this.lifeTimeTodosCount++
     const todo = {
-      id: Math.max(this._todos.map(todo => todo.id)) + 1,
+      id: this.lifeTimeTodosCount,
       title: title,
       description: description,
       dueDate: dueDate,
@@ -39,6 +42,8 @@ class TodoModel {
   // Delete a todo by filtering it out
   deleteTodo(id) {
     this._todos = this._todos.filter(todo => todo.id !== id);
+
+    this.onTodosListChanged(this._todos)
   };
 
   // Edit todo: title, description, dueDate, projectId, priority
@@ -61,12 +66,16 @@ class TodoModel {
   }
 
   // Grab all todos. If projectID is provided, only grab todos with those ids
-  viewTodos(projectId) {
+  getTodos(projectId) {
     if (projectId) {
       return this._todos.filter(todo => todo.projectId == projectId);
     } else {
       return this._todos;
     };
+  };
+
+  bindTodosListChanged(callback) {
+    this.onTodosListChanged = callback;
   };
 }
 
@@ -78,37 +87,45 @@ class ProjectModel {
       {
         id: 1,
         name: "Daily"
+      },
+      {
+        id: 2,
+        name: "School Work"
       }
     ];
+
+    this.lifetimeProjectsCount = 2;
   };
 
-  // View all projects
-  viewProjects() {
+  // Get all projects
+  getProjects() {
     return this._projects;
   };
 
   // Add a project
   addProject(name) {
+    this.lifetimeProjectsCount++
     const project = {
-      id: Math.max(this._projects.map(project => project.id)) + 1,
+      id: this.lifetimeProjectsCount,
       name: name
     }
     this._projects.push(project);
+
+    this.onProjectsListChanged(this._projects);
   };
-
-
-  // Edit existing project
-  editProject(id, name) {
-    const project = this._projects.find(project => project.id === id);
-    project.name = name
-  }
-
 
   // Delete a project
   // TODO: Add a dependency here or somewhere so that if a project is deleted, todo's associated with that project will be deleted as well
   deleteProject(id) {
     this._projects = this._projects.filter(project => project.id !== id);
+    console.log(this._projects)
+    this.onProjectsListChanged(this._projects);
   };
+
+  // Connect the model to the controller
+  bindProjectsListChanged(callback) {
+    this.onProjectsListChanged = callback;
+  }
 };
 
 export{ TodoModel, ProjectModel }
