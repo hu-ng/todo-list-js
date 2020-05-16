@@ -35,21 +35,23 @@ class TodoView {
   };
 
   // Create a Todo Card
-  createTodoCard(todoTitle, todoID) {
+  createTodoCard(todo) {
     const card = this.createElement("div", ["card", "todo-bordered"]);
     const content = this.createElement('div', ['card-content']);
 
     // Assign an ID to this card
-    card.dataset.todoId = todoID;
+    card.dataset.todoId = todo.id;
 
     // Toggle option
     const todoToggle = this.createElement('input', ['todo__toggle']);
     todoToggle.type = "checkbox";
     todoToggle.name = "todo-toggle";
+    todoToggle.checked = todo.complete;
 
     // Todo Title
     const description = this.createElement('span', ["card-content--description"]);
-    description.innerText = todoTitle;
+    description.innerText = todo.title;
+    if (todo.complete) { description.classList.add("todo-done") }
 
     // Icons
     const actionIcons = this.createElement("span", ["card-content--action-icons"]);
@@ -83,7 +85,7 @@ class TodoView {
 
     // Add all todos to the todos list
     todos.forEach(todo => {
-      let todoCard = this.createTodoCard(todo.title, todo.id);
+      let todoCard = this.createTodoCard(todo);
       this.todosList.appendChild(todoCard);
     })
   };
@@ -269,7 +271,7 @@ class TodoView {
     fieldset.appendChild(submitBtn)
 
     this.formContainer.appendChild(form)
-  }
+  };
 
   // Helper method to get todo id from element
   getTodoId(eventTarget) {
@@ -281,7 +283,7 @@ class TodoView {
     }
 
     return id_node.dataset.todoId
-  }
+  };
 
   // Bind delete project
   bindDeleteTodo(handler) {
@@ -308,9 +310,9 @@ class TodoView {
         handler(todoID);
       }
     })
-  }
+  };
 
-  // TODO: change this to use specific elements
+  // Bind add todos
   bindAddTodo(handler) {
     this.formContainer.firstElementChild.addEventListener("submit", event => {
       event.preventDefault()
@@ -334,6 +336,7 @@ class TodoView {
     });
   };
 
+  // Bind edit todos
   bindEditTodo(handler) {
     this.formContainer.firstElementChild.addEventListener("submit", event => {
       event.preventDefault()
@@ -355,6 +358,17 @@ class TodoView {
             priority.value
           );
         }
+      }
+    })
+  };
+
+  // Fix this
+  bindToggleTodo(handler) {
+    this.todosList.addEventListener("click", event => {
+      if (event.target.classList.contains("todo__toggle")) {
+        const todoID = Number(this.getTodoId(event.target));
+        console.log("toggled")
+        handler(todoID);
       }
     })
   }

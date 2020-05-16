@@ -26,6 +26,7 @@ class Controller {
     this.todoView.bindAddTodo(this.handleAddTodo)
     this.todoView.bindEditTodo(this.handleEditTodo)
     this.todoView.bindDeleteTodo(this.handleDeleteTodo)
+    this.todoView.bindToggleTodo(this.handleToggleTodo)
 
     // Todo Model Bindings
     this.todoModel.bindTodosListChanged(this.onTodosListChanged)
@@ -84,6 +85,10 @@ class Controller {
   handleDeleteTodo = id => {
     this.todoModel.deleteTodo(id);
   };
+
+  handleToggleTodo = id => {
+    this.todoModel.toggleTodo(id);
+  }
 };
 
 

@@ -225,3 +225,7 @@ button {
 .edit:hover, .delete:hover {
     border-bottom: 1.25px black solid;
 }
+
+.todo-done {
+    text-decoration: line-through;
+}

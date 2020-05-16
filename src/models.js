@@ -74,8 +74,11 @@ class TodoModel {
 
   // Toggle completeness of the todo
   toggleTodo(id) {
-    const todo = this._todos.find(todo => todo.id === id);
+    const todo = this._todos.find(todo => todo.id === Number(id));
     todo.complete = !todo.complete;
+    console.log(todo)
+
+    this.onTodosListChanged(this._todos)
   }
 
   // Grab all todos. If projectID is provided, only grab todos with those ids
