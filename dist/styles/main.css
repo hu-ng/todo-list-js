@@ -46,6 +46,7 @@ button {
     font-style: italic;
     font-size: var(--fs-large);
     margin-bottom: 1em;
+    margin-left: 0.5em;
 }
 
 .sidebar__app-name > p {

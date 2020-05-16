@@ -7,54 +7,60 @@ const priorityConst = {
 // Todo Model
 class TodoModel {
   constructor() {
-    this._todos = [
-      {
-        id: 1,
-        title: "First To-do",
-        description: "This is my first todo",
-        dueDate: new Date(2020, 11, 1),
-        complete: false,
-        projectId: 0,
-        priority: priorityConst.medium
-      },
-      {
-        id: 2,
-        title: "Second To-do",
-        description: "This is my other todo",
-        dueDate: new Date(2020, 10, 1),
-        complete: false,
-        projectId: 1,
-        priority: priorityConst.medium
-      },
-    ];
-
-    this.lifeTimeTodosCount = 2;
+    // this._todos = [
+    //   {
+    //     id: 1,
+    //     title: "First To-do",
+    //     description: "This is my first todo",
+    //     dueDate: new Date(2020, 11, 1),
+    //     complete: false,
+    //     projectId: 0,
+    //     priority: priorityConst.medium
+    //   },
+    //   {
+    //     id: 2,
+    //     title: "Second To-do",
+    //     description: "This is my other todo",
+    //     dueDate: new Date(2020, 10, 1),
+    //     complete: false,
+    //     projectId: 1,
+    //     priority: priorityConst.medium
+    //   },
+    // ];
+    this._todos = JSON.parse(localStorage.getItem('todos')) || []
+    this._lifetimeTodosCount = localStorage.getItem('todosCount') || 0
   };
 
+  // Function to commit to-dos to local storage
+  _commit(todos) {
+    this.onTodosListChanged(todos)
+    localStorage.setItem('todosCount', this._lifetimeTodosCount)
+    localStorage.setItem('todos', JSON.stringify(todos))
+  }
+
   // Add Delete Toggle Edit
-  // Add a new todo with unique id
   addTodo(title, description, dueDate, projectId, priority) {
-    this.lifeTimeTodosCount++
+    this._lifetimeTodosCount++
     const todo = {
-      id: this.lifeTimeTodosCount,
+      id: this._lifetimeTodosCount,
       title: title,
       description: description,
-      dueDate: new Date(dueDate),
+      dueDate: dueDate,
       complete: false,
-      projectId: projectId ? projectId : null,
+      projectId: projectId ? Number(projectId) : null,
       priority: priority
     };
 
     this._todos.push(todo);
 
-    this.onTodosListChanged(this._todos)
+    this._commit(this._todos)
   };
 
   // Delete a todo by filtering it out
   deleteTodo(id) {
     this._todos = this._todos.filter(todo => todo.id !== id);
 
-    this.onTodosListChanged(this._todos)
+    this._commit(this._todos)
   };
 
   // Edit todo: title, description, dueDate, projectId, priority
@@ -64,11 +70,11 @@ class TodoModel {
     // Update the fields
     todo.title = title;
     todo.description = description;
-    todo.dueDate = new Date(dueDate);
-    todo.projectId = projectId;
+    todo.dueDate = dueDate;
+    todo.projectId = Number(projectId);
     todo.priority = priority;
 
-    this.onTodosListChanged(this._todos)
+    this._commit(this._todos)
   };
 
 
@@ -78,7 +84,7 @@ class TodoModel {
     todo.complete = !todo.complete;
     console.log(todo)
 
-    this.onTodosListChanged(this._todos)
+    this._commit(this._todos)
   }
 
   // Grab all todos. If projectID is provided, only grab todos with those ids
@@ -115,8 +121,16 @@ class ProjectModel {
       }
     ];
 
-    this.lifetimeProjectsCount = 2;
+    this._projects = JSON.parse(localStorage.getItem('projects')) || []
+    this._lifetimeProjectsCount = localStorage.getItem('projectsCount') || 0;
   };
+
+  // Commit projects to local storage
+  _commit(projects) {
+    this.onProjectsListChanged(projects);
+    localStorage.setItem("projectsCount", this._lifetimeProjectsCount);
+    localStorage.setItem("projects", JSON.stringify(this._projects))
+  }
 
   // Get all projects
   getProjects() {
@@ -130,21 +144,21 @@ class ProjectModel {
 
   // Add a project
   addProject(name) {
-    this.lifetimeProjectsCount++
+    this._lifetimeProjectsCount++
     const project = {
-      id: this.lifetimeProjectsCount,
+      id: this._lifetimeProjectsCount,
       name: name
     }
     this._projects.push(project);
 
-    this.onProjectsListChanged(this._projects);
+    this._commit(this._projects)
   };
 
   // Delete a project
   // TODO: Add a dependency here or somewhere so that if a project is deleted, todo's associated with that project will be deleted as well
   deleteProject(id) {
     this._projects = this._projects.filter(project => project.id !== id);
-    this.onProjectsListChanged(this._projects);
+    this._commit(this._projects)
   };
 
   // Connect the model to the controller

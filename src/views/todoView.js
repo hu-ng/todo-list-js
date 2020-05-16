@@ -96,7 +96,7 @@ class TodoView {
     }
   }
 
-  // Display a todo form used for adding new todos and editing
+  // Display a todo form used for adding and editting todos
   displayTodoForm(todo, projects) {
     // Switch displays
     this.todosList.style.display = "none";
@@ -192,7 +192,8 @@ class TodoView {
       "name":"dueDate",
       "id":"dueDate",
     })
-    if (todo) { dueDateInput.value = todo.dueDate.toISOString().substring(0, 10) }
+
+    if (todo) { dueDateInput.value = todo.dueDate }
 
     dueDateGroup.appendChild(dueDateLabel)
     dueDateGroup.append(dueDateInput)
@@ -362,12 +363,11 @@ class TodoView {
     })
   };
 
-  // Fix this
+  // Bind toggle completeness todo
   bindToggleTodo(handler) {
     this.todosList.addEventListener("click", event => {
       if (event.target.classList.contains("todo__toggle")) {
         const todoID = Number(this.getTodoId(event.target));
-        console.log("toggled")
         handler(todoID);
       }
     })
