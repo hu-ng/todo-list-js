@@ -55,15 +55,33 @@ button {
 
 .sidebar__projects {
     max-height: 55vh;
-    overflow: auto;
+    overflow-y: auto;
 }
 
 .card {
-    background: #FFFFFF;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
     height: 3.5em;
     margin-bottom: 1.2em;
+}
+
+.project-chosen {
+    background: #BED3F2 !important;
+}
+
+.blue-background-transit {
+    background: linear-gradient(to right, #BED3F2 50%, white 50%);
+    background-size: 250% 100%;
+    background-position: right bottom;
+    transition: all .5s ease-out;
+}
+
+.blue-background-transit:hover {
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.card:hover {
+    background-position: left bottom;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .card-content {
@@ -79,7 +97,7 @@ button {
 
 .card-content--action-icons {
     height: 50%;
-    padding-right: 1em;
+    margin-right: 1em;
     margin-left: auto;
 }
 
@@ -155,6 +173,10 @@ button {
     border: 1.5px solid black !important;
 }
 
+.project-bordered {
+    border: 1px solid black !important;
+}
+
 .todos__list {
     margin-top: 3em;
     margin-bottom: 3em;
@@ -194,4 +216,12 @@ button {
 .todo-form__icon {
     height: 20px;
     margin-left: auto;
+}
+
+.edit, .delete {
+    padding: 1px;
+}
+
+.edit:hover, .delete:hover {
+    border-bottom: 1.25px black solid;
 }

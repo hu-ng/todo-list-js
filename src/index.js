@@ -16,22 +16,30 @@ class Controller {
 
     // Project View Bindings
     this.projectView.bindAddProject(this.handleAddProject)
-    this.projectView.bindDeleteProject(this.handleDeleteProject)
 
     // Project Model Bindings
     this.projectModel.bindProjectsListChanged(this.onProjectsListChanged)
 
     // Todo View Bindings
+    this.todoView.bindOpenCreateForm(this.handleOpenCreateForm)
+    this.todoView.bindOpenEditForm(this.handleOpenEditForm)
+    this.todoView.bindAddTodo(this.handleAddTodo)
+    this.todoView.bindEditTodo(this.handleEditTodo)
     this.todoView.bindDeleteTodo(this.handleDeleteTodo)
 
     // Todo Model Bindings
     this.todoModel.bindTodosListChanged(this.onTodosListChanged)
+
+    // Select Home by default
+    this.projectView.toggleProject("0")
   };
 
 
   // ------- CODE FOR PROJECTS --------- //
   onProjectsListChanged = projects => {
     this.projectView.displayProjects(projects);
+    this.projectView.bindSelectProject(this.handleSelectProject);
+    this.projectView.bindDeleteProject(this.handleDeleteProject);
   };
 
   // Adding a project
@@ -44,15 +52,38 @@ class Controller {
     this.projectModel.deleteProject(id);
   }
 
+  handleSelectProject = id => {
+    this.projectView.toggleProject(id);
+    if (Number(id) === 0) {id = null};
+    this.todoView.displayTodos(this.todoModel.getTodos(id), this.projectModel.getProject(id));
+  }
+
   
   // ------- CODE FOR TODOS --------- //
   onTodosListChanged = todos => {
     this.todoView.displayTodos(todos);
   };
 
+  handleOpenCreateForm = () => {
+    this.todoView.displayTodoForm(null, this.projectModel.getProjects());
+  };
+
+  handleOpenEditForm = (id) => {
+    this.todoView.displayTodoForm(this.todoModel.getTodo(id), this.projectModel.getProjects());
+  }
+
+  handleAddTodo = (title, description, dueDate, projectId, priority) => {
+    this.todoModel.addTodo(title, description, dueDate, projectId, priority);
+    this.projectView.toggleProject("0")
+  };
+
+  handleEditTodo = (id, title, description, dueDate, projectId, priority) => {
+    this.todoModel.editTodo(id, title, description, dueDate, projectId, priority);
+  }
+
   handleDeleteTodo = id => {
     this.todoModel.deleteTodo(id);
-  }
+  };
 };
 
 

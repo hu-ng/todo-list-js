@@ -18,7 +18,7 @@ class ProjectView {
 
   // Create a project card
   createProjectCard(projectName, projectID, deletable=true, iconSrc="./img/note.svg") {
-    const card = this.createElement('div', ['card']);
+    const card = this.createElement('div', ['card', 'project-bordered', 'blue-background-transit']);
     const content = this.createElement('div', ['card-content']);
     
     // Add the ID to the card
@@ -65,6 +65,18 @@ class ProjectView {
       this.projectsList.appendChild(projectCard);
     });
   };
+  
+  // Deselect all other projects but given project
+  toggleProject(id) {
+    const projectCards = Array.from(this.projectsList.getElementsByClassName("card"));
+    projectCards.forEach(card => {
+      if (card.dataset.projectId === id) {
+        card.classList.add("project-chosen")
+      } else {
+        card.classList.remove("project-chosen")
+      }
+    });
+  }
 
   // Bind add project
   bindAddProject(handler) {
@@ -77,20 +89,33 @@ class ProjectView {
       if (projectName) {
         handler(projectName)
       }
-      input.value = "";
-      input.innerText = ""
+      this.projectForm.reset();
     })
   };
 
   // Bind delete project
   bindDeleteProject(handler) {
-    this.projectsList.addEventListener('click', event => {
-      if (event.target.classList.contains("delete")) {
+    // Get delete buttons
+    let projectDeletes = this.projectsList.getElementsByClassName("card-content--action-icons delete");
+    Array.from(projectDeletes).forEach(del => {
+      del.addEventListener('click', event => {
         const projectID = Number(event.target.parentNode.parentNode.dataset.projectId)
         if (projectID > 0) handler(projectID)
-      }
+      })
     })
   };
+
+  // Bind select project
+  bindSelectProject(handler) {
+    this.projectsList.childNodes.forEach(card => {
+      card.addEventListener("click", event => {
+        if (!event.target.classList.contains("delete")) {
+          let projectId = card.dataset.projectId;
+          handler(projectId)
+        }
+      })
+    });
+  }
 }
 
 export { ProjectView }

@@ -12,14 +12,23 @@ class TodoModel {
         id: 1,
         title: "First To-do",
         description: "This is my first todo",
+        dueDate: new Date(2020, 11, 1),
+        complete: false,
+        projectId: 0,
+        priority: priorityConst.medium
+      },
+      {
+        id: 2,
+        title: "Second To-do",
+        description: "This is my other todo",
         dueDate: new Date(2020, 10, 1),
         complete: false,
-        projectId: null,
+        projectId: 1,
         priority: priorityConst.medium
       },
     ];
 
-    this.lifeTimeTodosCount = 1;
+    this.lifeTimeTodosCount = 2;
   };
 
   // Add Delete Toggle Edit
@@ -30,13 +39,15 @@ class TodoModel {
       id: this.lifeTimeTodosCount,
       title: title,
       description: description,
-      dueDate: dueDate,
+      dueDate: new Date(dueDate),
       complete: false,
       projectId: projectId ? projectId : null,
       priority: priority
     };
 
     this._todos.push(todo);
+
+    this.onTodosListChanged(this._todos)
   };
 
   // Delete a todo by filtering it out
@@ -48,14 +59,16 @@ class TodoModel {
 
   // Edit todo: title, description, dueDate, projectId, priority
   editTodo(id, title, description, dueDate, projectId, priority) {
-    const todo = this._todos.find(todo => todo.id === id);
+    const todo = this._todos.find(todo => todo.id === Number(id));
 
     // Update the fields
     todo.title = title;
     todo.description = description;
-    todo.dueDate = dueDate;
+    todo.dueDate = new Date(dueDate);
     todo.projectId = projectId;
     todo.priority = priority;
+
+    this.onTodosListChanged(this._todos)
   };
 
 
@@ -73,6 +86,11 @@ class TodoModel {
       return this._todos;
     };
   };
+
+  getTodo(id) {
+    const todo = this._todos.find(todo => todo.id === id);
+    return todo;
+  }
 
   bindTodosListChanged(callback) {
     this.onTodosListChanged = callback;
@@ -102,6 +120,11 @@ class ProjectModel {
     return this._projects;
   };
 
+  // Get one project
+  getProject(id) {
+    return this._projects.find(project => project.id === Number(id))
+  }
+
   // Add a project
   addProject(name) {
     this.lifetimeProjectsCount++
@@ -118,7 +141,6 @@ class ProjectModel {
   // TODO: Add a dependency here or somewhere so that if a project is deleted, todo's associated with that project will be deleted as well
   deleteProject(id) {
     this._projects = this._projects.filter(project => project.id !== id);
-    console.log(this._projects)
     this.onProjectsListChanged(this._projects);
   };
 
